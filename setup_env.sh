@@ -2,55 +2,53 @@
 # setup_env.sh
 set -euo pipefail
 
-# --- Settings ---
-CONDA_ENV_NAME="py312"
+ENV_NAME="py312"
 PY_VER="3.12"
 TIMESAT_VER="4.1.7.dev0"
 
-# --- Sanity checks ---
-if ! command -v conda >/dev/null 2>&1; then
-  echo "Conda not found. Please install Miniconda/Anaconda and ensure 'conda' is in PATH."
+echo "======================================================"
+echo " Step 1: Create or update Conda environment: $ENV_NAME"
+echo "======================================================"
+if ! command -v conda &> /dev/null; then
+  echo "[ERROR] Conda not found. Please install Miniconda or Anaconda first."
   exit 1
 fi
 
-echo ">>> Using Conda: $(conda --version)"
-
-# --- Create env if needed ---
-if conda env list | awk '{print $1}' | grep -qx "$CONDA_ENV_NAME"; then
-  echo ">>> Step 1: Conda environment '$CONDA_ENV_NAME' already exists; skipping creation."
+if ! conda env list | grep -q "^$ENV_NAME\s"; then
+  echo "Creating new environment '$ENV_NAME' with Python $PY_VER..."
+  conda create -y -n "$ENV_NAME" "python=$PY_VER"
 else
-  echo ">>> Step 1: Creating Conda environment '$CONDA_ENV_NAME' (Python $PY_VER)"
-  conda create -y -n "$CONDA_ENV_NAME" "python=$PY_VER"
+  echo "Environment '$ENV_NAME' already exists. Proceeding..."
 fi
 
-# --- Upgrade pip/wheel inside the env ---
-echo ">>> Step 2: Upgrade pip and wheel in '$CONDA_ENV_NAME'"
-conda run -n "$CONDA_ENV_NAME" python -m pip install -U pip wheel
+echo "======================================================"
+echo " Step 2: Activate the environment"
+echo "======================================================"
+source "$(conda info --base)/etc/profile.d/conda.sh"
+conda activate "$ENV_NAME"
 
-# --- Install project dependencies if requirements.txt is present ---
-echo ">>> Step 3: Install dependencies from requirements.txt (if present)"
+echo "======================================================"
+echo " Step 3: Upgrade pip and wheel"
+echo "======================================================"
+python -m pip install -U pip wheel
+
+echo "======================================================"
+echo " Step 4: Install dependencies from requirements.txt"
+echo "======================================================"
 if [ -f requirements.txt ]; then
-  conda run -n "$CONDA_ENV_NAME" python -m pip install -r requirements.txt
+  python -m pip install -r requirements.txt
 else
-  echo "⚠️ requirements.txt not found; skipping dependency installation."
+  echo "⚠️  requirements.txt not found. Skipping dependency installation."
 fi
 
-# --- Install TIMESAT from TestPyPI ---
-echo ">>> Step 4: Install TIMESAT $TIMESAT_VER from TestPyPI"
-conda run -n "$CONDA_ENV_NAME" python -m pip install \
-  --index-url https://test.pypi.org/simple/ \
-  --extra-index-url https://pypi.org/simple \
-  "timesat==$TIMESAT_VER"
+echo "======================================================"
+echo " Step 5: Install TIMESAT $TIMESAT_VER from TestPyPI"
+echo "======================================================"
+python -m pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple timesat==4.1.7.dev0
+python -c "import timesat, timesat._timesat as _; print('timesat', timesat.__version__, 'OK')"
 
-# --- Verify TIMESAT import ---
-echo ">>> Step 5: Verify TIMESAT installation"
-conda run -n "$CONDA_ENV_NAME" python - <<'PYCODE'
-import timesat, timesat._timesat as _
-print(f"TIMESAT {timesat.__version__} OK")
-PYCODE
-
-echo
-echo "✅ Environment setup complete."
+echo "======================================================"
+echo " ✅ Environment setup complete"
+echo "======================================================"
 echo "To activate later, run:"
-echo "  source \"$(conda info --base)/etc/profile.d/conda.sh\""
-echo "  conda activate $CONDA_ENV_NAME"
+echo "    conda activate $ENV_NAME"
