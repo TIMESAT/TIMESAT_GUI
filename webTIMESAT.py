@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = 'supersecretkey'
 app.config['MAX_CONTENT_LENGTH'] = 4096 * 1024 * 1024  # 4GB
 
-# 注册 file_list_input 的 Blueprint
+# file_list_input 的 Blueprint
 from file_list_input import file_list_input_bp
 app.register_blueprint(file_list_input_bp)
 from tab_settings import tab_settings_bp
