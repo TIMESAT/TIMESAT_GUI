@@ -343,7 +343,6 @@ def raw_single_extraction(current_col, current_row):
     return raw_y, raw_w, raw_lc, tv_yyyymmdd, tv_yyyydoy
 
 
-
 def ts_single_run(raw_y, raw_w, raw_lc, yrstart, nyear, z, 
     p_outststep, 
     p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
@@ -360,6 +359,43 @@ def ts_single_run(raw_y, raw_w, raw_lc, yrstart, nyear, z,
     lc = np.ones(raw_y.shape[:2], dtype=np.uint8)
     p_nclasses = 1 # need to modify later
     landuse = np.ones(255, dtype='uint8')
+
+
+    # import pickle, os
+    # from pathlib import Path
+
+    # # Toggle this manually
+    # SAVE_TIMESAT_INPUTS = True   # set False in production
+
+    # def dump_timesat_inputs(**kwargs):
+    #     if not SAVE_TIMESAT_INPUTS:
+    #         return None
+    #     try:
+    #         dump_dir = Path("timesat_inputs")
+    #         dump_dir.mkdir(exist_ok=True)
+    #         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
+    #         path = dump_dir / f"inputs_{timestamp}.pkl"
+    #         with open(path, "wb") as f:
+    #             pickle.dump(kwargs, f, protocol=pickle.HIGHEST_PROTOCOL)
+    #         print(f"[debug] Saved inputs to {path}")
+    #         return str(path)
+    #     except Exception as e:
+    #         print(f"[debug] Failed to save inputs: {e}")
+    #         return None
+
+    # if SAVE_TIMESAT_INPUTS:
+    #     dump_timesat_inputs(
+    #         nyr=nyear, vi=raw_y, qa=raw_w, td=tv_yyyydoy,
+    #         lc=lc, p_nclasses=p_nclasses, landuse=landuse, p_outindex=p_outindex,
+    #         p_ignoreday=p_ignoreday, p_ylu=p_ylu, p_printflag=p_printflag,
+    #         p_fitmethod=p_fitmethod, p_smooth=p_smooth, p_nodata=p_nodata,
+    #         p_outlier=p_outlier, p_nenvi=p_nenvi, p_wfactnum=p_wfactnum,
+    #         p_startmethod=p_startmethod, p_startcutoff=p_startcutoff,
+    #         p_lpbase=p_low_percentile, p_fillbase=p_fillbase,
+    #         p_hrvppformat=p_hrvppformat, p_seasonmethod=p_seasonmethod,
+    #         p_seapar=p_seapar, nimg=z, p_outindex_num=p_outindex_num, row=1, col=1
+    #     )
+
 
     vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsf2py(
         nyear, raw_y, raw_w, tv_yyyydoy, lc, p_nclasses, landuse, p_outindex,
