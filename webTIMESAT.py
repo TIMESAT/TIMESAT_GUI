@@ -54,6 +54,10 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
+@app.route("/quitapp", methods=["POST"])
+def quit_app():
+    return "Thank you for using TIMESAT!"
+
 if __name__ == '__main__':
     import webbrowser
     import threading

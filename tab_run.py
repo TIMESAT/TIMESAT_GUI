@@ -305,11 +305,7 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
         data_type = img_profile['dtype']
 
         vi = ts_functions.load4ym3()
-        print(vi)
-        print(vi.shape)
         vi = np.nan_to_num(vi, nan=p_ylu[0]-1)
-        print(vi)
-        print(vi.shape)
         qa = ts_functions.load4wm3()
         qa = np.nan_to_num(qa, nan=0)
         lc = ts_functions.load4lc3()
@@ -322,7 +318,7 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
             def runtimesat(vi_temp, qa_temp):
                 vpp_para, vppqa, nseason_para, yfit_para, yfitqa, seasonfit, tseq = timesat.tsf2py(
                     nyear, vi_temp, qa_temp, tv_yyyydoy, lc, p_nclasses, landuse, p_outindex,
-                    p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+                    p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
                     p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
                     1, x, z, p_outindex_num)
                 vpp_para = vpp_para[0, :, :]
@@ -342,7 +338,7 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
 
             vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsf2py(
                 nyear, vi, qa, tv_yyyydoy, lc, p_nclasses, landuse, p_outindex,
-                p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+                p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
                 p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
                 y, x, z, p_outindex_num)
 

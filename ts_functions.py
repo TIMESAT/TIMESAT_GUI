@@ -99,7 +99,6 @@ def load4array_params():
     return array_params
 
 def read_time_vector_data(lines):
-    global tv_yyyymmdd, tv_yyyydoy
 
     # Check if file exists
     try:
@@ -165,7 +164,7 @@ def read_time_vector_data(lines):
     except FileNotFoundError:
         return None, None
 
-def extract_dates_strlist(band_names: List[str], input_ym3: np.ndarray):
+def extract_image_stack(band_names: List[str], input_ym3: np.ndarray):
     global ym3, wm3, lc3, tv_yyyymmdd, tv_yyyydoy
 
     # Initialize 3D arrays
@@ -186,6 +185,27 @@ def extract_dates_strlist(band_names: List[str], input_ym3: np.ndarray):
     max_y = float(np.nanmax(ym3))
 
     return min_t, max_t, min_y, max_y, nyear, yrstart, yrend
+
+def extract_qa_stack(band_names: List[str], input_wm3: np.ndarray):
+    global ym3, wm3, lc3, tv_yyyymmdd, tv_yyyydoy
+
+    # Initialize 3D arrays
+    wm3 = np.array(input_wm3, dtype=np.float32, copy=True)
+
+    # Read time vector data
+    tv_yyyymmdd_w, tv_yyyydoy_w, nyear, yrstart, yrend = read_time_vector_data(band_names)
+
+    # Check shape and time vector equality
+    if (
+        ym3.shape == wm3.shape
+        and np.array_equal(tv_yyyymmdd_w, tv_yyyymmdd)
+    ):
+        ym_wm_check = 1
+    else:
+        ym_wm_check = 0
+
+    return ym_wm_check
+
 
 def read_image_list_file(img_file_name,lines):
     # Open and read the text file

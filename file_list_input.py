@@ -73,7 +73,7 @@ def upload_input_file():
                     desc = f"Band {i}"
                 band_names.append(desc)
         image_file_names = band_names
-        min_t, max_t, min_y, max_y, nyear, yrstart, yrend = ts_functions.extract_dates_strlist(band_names, stack_data)
+        min_t, max_t, min_y, max_y, nyear, yrstart, yrend = ts_functions.extract_image_stack(band_names, stack_data)
 
         session['yrstart'] = int(yrstart)
         session['yrend'] = int(yrend)
@@ -525,6 +525,23 @@ def upload_qa_file():
             qa_file_names = [line.strip() for line in lines[1:npt + 1]]
         else:
             return "Invalid format in the first line of the file", 400
+
+    # Handle geotif stack file
+    elif input_type == 'imagestack':
+        with rasterio.open(file) as src:
+            
+            stack_data = src.read()
+            stack_data = np.moveaxis(stack_data, 0, -1)
+            
+            band_names = []
+            for i in range(1, src.count + 1):  # rasterio bands are 1-based
+                desc = src.descriptions[i-1]   # description for each band
+                if desc is None:
+                    desc = f"Band {i}"
+                band_names.append(desc)
+        ym_wm_check = ts_functions.extract_qa_stack(band_names, stack_data)
+        if ym_wm_check == 1:
+            qa_file_names = band_names
 
     # Handle table files
     elif input_type == 'table':
