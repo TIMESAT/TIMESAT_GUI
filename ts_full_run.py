@@ -340,7 +340,7 @@ def _ts_run_(data):
             def runtimesat(vi_temp, qa_temp):
                 vpp_para, vppqa, nseason_para, yfit_para, yfitqa, seasonfit, tseq = timesat.tsfprocess(
                     yr, vi_temp, qa_temp, timevector, p_outindex,
-                    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+                    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
                     p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
                     1, x, z, p_outindex_num)
                 vpp_para = vpp_para[0, :, :]
@@ -359,7 +359,7 @@ def _ts_run_(data):
         else:
             vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsfprocess(
                 yr, vi, qa, timevector, p_outindex,
-                p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+                p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
                 p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
                 y, x, z, p_outindex_num)
 

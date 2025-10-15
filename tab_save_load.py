@@ -74,9 +74,9 @@ def _form_json_(session_data_json):
                 'value': [session_data_json['data-range-min'], session_data_json['data-range-max']],
                 'description': 'Data range with minimum and maximum limits.'
             },
-            'gap-length': {
-                'value': session_data_json['gap-length'],
-                'description': 'Maximum allowing gap length.'
+            'p_davailwin': {
+                'value': session_data_json['p_davailwin'],
+                'description': 'A window size to check data availibility.'
             },
             'outliers': {
                 'value': session_data_json['outliers'],
@@ -242,7 +242,7 @@ def load_geojson_data():
         variables = {
             "data-range-min": json_data.get('settings', {}).get("data-range", {}).get("value", [-10000])[0],
             "data-range-max": json_data.get('settings', {}).get("data-range", {}).get("value", [10000])[1],
-            "gap-length": json_data.get('settings', {}).get("gap-length", {}).get("value", 999),
+            "p_davailwin": json_data.get('settings', {}).get("p_davailwin", {}).get("value", 999),
             "outliers": json_data.get('settings', {}).get("outliers", {}).get("value", 0),
             "a1": json_data.get('settings', {}).get("p_a", {}).get("value", [-10000])[0],
             "a2": json_data.get('settings', {}).get("p_a", {}).get("value", [10000])[1],

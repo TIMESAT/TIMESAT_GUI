@@ -23,7 +23,7 @@ default_params = {
     "p_ignoreday": 365,
     "data-range-min": -10000,
     "data-range-max": 10000,
-    "gap-length": 999,
+    "p_davailwin": 999,
     "a1": -10000,
     "a2": 10000,
     "a3": 1,
@@ -138,6 +138,7 @@ def update_plot():
 
     p_hrvppformat = session.get('p_hrvppformat')
     p_nodata = session.get('nodata-out')
+    p_davailwin = session.get('p_davailwin')
     p_outlier = session.get('outliers')
 
     # temporary — fill 255-length arrays with session scalar values
@@ -252,7 +253,7 @@ def update_plot():
         vpp, vppqa, nseason, yfit, yfitqa, seasonfit, daily_timestep = ts_functions.ts_single_run(
         raw_y, raw_w, raw_lc, yrstart, nyear, num_of_data,
         p_outststep, 
-        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
         p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar
         )
         # 添加dl曲线
@@ -286,7 +287,7 @@ def update_plot():
         vpp, vppqa, nseason, yfit, yfitqa, seasonfit, daily_timestep = ts_functions.ts_single_run(
         raw_y, raw_w, raw_lc, yrstart, nyear, num_of_data,
         p_outststep, 
-        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
         p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar
         )
         # 添加dl曲线
@@ -319,7 +320,7 @@ def update_plot():
         vpp, vppqa, nseason, yfit, yfitqa, seasonfit, daily_timestep = ts_functions.ts_single_run(
         raw_y, raw_w, raw_lc, yrstart, nyear, num_of_data,
         p_outststep, 
-        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
         p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar
         )
         # 添加dl曲线
@@ -348,7 +349,7 @@ def update_plot():
         vpp, vppqa, nseason, yfit, yfitqa, seasonfit, daily_timestep = ts_functions.ts_single_run(
         raw_y, raw_w, raw_lc, yrstart, nyear, num_of_data,
         p_outststep, 
-        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
         p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar
         )
         # 添加dl曲线

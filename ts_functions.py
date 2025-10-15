@@ -344,7 +344,7 @@ def raw_single_extraction(current_row, current_col):
 
 def ts_single_run(raw_y, raw_w, raw_lc, yrstart, nyear, z, 
     p_outststep, 
-    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
     p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar):
     global tv_yyyymmdd, tv_yyyydoy
 
@@ -397,7 +397,7 @@ def ts_single_run(raw_y, raw_w, raw_lc, yrstart, nyear, z,
 
     vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsf2py(
         nyear, raw_y, raw_w, tv_yyyydoy, lc, p_nclasses, landuse, p_outindex,
-        p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+        p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
         p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
         1, 1, z, p_outindex_num)
 
@@ -414,7 +414,7 @@ def ts_single_run(raw_y, raw_w, raw_lc, yrstart, nyear, z,
 
 def ts_full_run(raw_y, raw_w, raw_lc, yrstart, nyear, z, 
     p_outststep, 
-    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
     p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar):
     global tv_yyyymmdd, tv_yyyydoy
 
@@ -425,9 +425,9 @@ def ts_full_run(raw_y, raw_w, raw_lc, yrstart, nyear, z,
     # Replace NaN values with -9999
     raw_y = np.nan_to_num(raw_y, nan=p_ylu[0]-1)
 
-    vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsfprocess(
+    vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsf2py(
         nyear, raw_y, raw_w, tv_yyyydoy, lc, p_nclasses, landuse, p_outindex,
-        p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+        p_ignoreday, p_ylu, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
         p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
         1, 1, z, p_outindex_num)
 

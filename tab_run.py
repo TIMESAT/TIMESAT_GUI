@@ -45,11 +45,11 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
 
     p_outststep = session_data_json['p_outststep']
     p_nodata = session_data_json['p_nodata']
+    p_davailwin = session_data_json['p_davailwin']
     p_ignoreday = session_data_json['p_ignoreday']
     p_ylu = [session_data_json['data-range-min'], session_data_json['data-range-max']] 
     p_a = [session_data_json['a1'], session_data_json['a2'], session_data_json['a3'], session_data_json['a4'], session_data_json['a5'], session_data_json['a6'], session_data_json['a7'], session_data_json['a8'], session_data_json['a9']]
     p_printflag = session_data_json['debug_mod']
-    p_nodata = session_data_json['p_nodata']
     p_outlier = session_data_json['outliers']
     p_hrvppformat = session_data_json['p_hrvppformat']
 
@@ -205,7 +205,7 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
             # print(qa.reshape)
             # vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsfprocess(
             #     nyear, vi, qa, tv_yyyydoy, p_outindex,
-            #     p_ignoreday, p_ylu, p_a, 1, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+            #     p_ignoreday, p_ylu, p_a, 1, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
             #     p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
             #     1, 1, z, p_outindex_num)
             # return
@@ -216,7 +216,7 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
                 def runtimesat(vi_temp, qa_temp):
                     vpp_para, vppqa, nseason_para, yfit_para, yfitqa, seasonfit, tseq = timesat.tsfprocess(
                         nyear, vi_temp, qa_temp, tv_yyyydoy, p_outindex,
-                        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+                        p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
                         p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
                         1, x, z, p_outindex_num)
                     vpp_para = vpp_para[0, :, :]
@@ -235,7 +235,7 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
             else:
                 vpp, vppqa, nseason, yfit, yfitqa, seasonfit, tseq = timesat.tsfprocess(
                     nyear, vi, qa, tv_yyyydoy, p_outindex,
-                    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_outlier, p_nenvi, p_wfactnum,
+                    p_ignoreday, p_ylu, p_a, p_printflag, p_fitmethod, p_smooth, p_nodata, p_davailwin, p_outlier, p_nenvi, p_wfactnum,
                     p_startmethod, p_startcutoff, p_low_percentile, p_fillbase, p_hrvppformat, p_seasonmethod, p_seapar,
                     y, x, z, p_outindex_num)
 
