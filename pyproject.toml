@@ -43,9 +43,9 @@ exclude = ["/tests", "/.github"]
 packages = ["src/timesat_gui"]
 
 # Ensure templates and static are included in the wheel
-[tool.hatch.build.targets.wheel.force-include]
-"src/timesat_gui/templates" = "timesat_gui/templates"
-"src/timesat_gui/static" = "timesat_gui/static"
+# [tool.hatch.build.targets.wheel.force-include]
+# "src/timesat_gui/templates" = "timesat_gui/templates"
+# "src/timesat_gui/static" = "timesat_gui/static"
 
 [tool.pytest.ini_options]
 addopts = "-q"
