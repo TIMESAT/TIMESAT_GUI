@@ -1,7 +1,7 @@
 # TIMESAT GUI
 
-`TIMESAT GUI` is a Python-based graphical interface and workflow manager for the [TIMESAT](https://test.pypi.org/project/timesat/) package.  
-It provides a simple web dashboard to configure, run, and visualize TIMESAT outputs.
+`TIMESAT GUI` is a graphical user interface and workflow manager for the [TIMESAT](https://pypi.org/project/timesat/) package.  
+It provides a simple web dashboard to configure and run TIMESAT.
 
 ---
 
@@ -27,7 +27,7 @@ Although it is not published on Conda, you can safely install it *inside* a Cond
 ```bash
 conda create -n timesat python=3.12
 conda activate timesat
-pip install -i https://test.pypi.org/simple/ timesat-gui
+pip install timesat-gui
 ```
 
 > This approach uses Conda only for environment isolation.  
@@ -52,7 +52,7 @@ pip install -i https://test.pypi.org/simple/ timesat-gui
    ```bash
    uv venv .venv
    source .venv/bin/activate
-   uv pip install --index-url https://test.pypi.org/simple/ timesat-gui
+   uv pip install timesat-gui
    ```
 
 > `uv` provides faster dependency resolution and caching.  
@@ -65,7 +65,7 @@ pip install -i https://test.pypi.org/simple/ timesat-gui
 If you already have Python 3.12+ installed:
 
 ```bash
-pip install -i https://test.pypi.org/simple/ timesat-gui
+pip install timesat-gui
 ```
 
 ---
