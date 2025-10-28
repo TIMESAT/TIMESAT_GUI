@@ -90,16 +90,8 @@ def load4memory_table_data():
     global table_data
     return table_data
 
-def save2array_params(x):
-    global array_params
-    array_params = x
-
-def load4array_params():
-    global array_params
-    return array_params
-
 def read_time_vector_data(lines):
-    print(lines)
+    # print(lines)
     # Check if file exists
     try:
         """
@@ -162,7 +154,14 @@ def read_time_vector_data(lines):
         return tv_yyyymmdd, tv_yyyydoy, nyear, yrstart, yrend
 
     except FileNotFoundError:
-        return None, None
+        return None, None, None, None, None
+
+
+def extract_image_list_dates(file_names: List[str]):
+    global tv_yyyymmdd, tv_yyyydoy
+
+    tv_yyyymmdd, tv_yyyydoy, nyear, yrstart, yrend = read_time_vector_data(file_names)
+
 
 def extract_image_stack(band_names: List[str], input_ym3: np.ndarray):
     global ym3, wm3, lc3, tv_yyyymmdd, tv_yyyydoy

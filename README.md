@@ -145,7 +145,7 @@ If you use **TIMESAT** or **TIMESAT-GUI** in your research, please cite the corr
 ## Acknowledgments
 
 - [TIMESAT](https://www.nateko.lu.se/TIMESAT) — Original analysis framework for satellite time-series data.  
-- This project provides a user-friendly interface to make TIMESAT more accessible for research and operational workflows.
+- This project acknowledges the Swedish National Space Agency (SNSA), the European Environment Agency (EEA), and the European Space Agency (ESA) for their support and for providing access to satellite data and related resources that made this software possible.
 
 ---
 

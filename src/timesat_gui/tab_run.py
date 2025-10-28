@@ -33,7 +33,7 @@ def long_running_job(input_type,session_data_json,ym3,wm3,lc3):
 
     progress_updates.append("\n----------------------\nJob started!\n")
 
-    array_params = ts_functions.load4array_params()
+    array_params = tab_settings.load4array_params()
 
     qlist = session_data_json['qa_file_names']
     outfolder = session_data_json['output_folder']

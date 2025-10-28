@@ -3,6 +3,7 @@ import io
 import rasterio
 import json
 from rasterio.warp import transform_bounds
+from rasterio.warp import transform as rio_transform
 import numpy as np
 import matplotlib.cm as cm
 from . import ts_functions
@@ -31,7 +32,7 @@ def upload_input_file():
     if file.filename == '':
         return "No file selected", 400
 
-    # Check if the file is a txt or csv file
+    # Check if the file is a txt file
 
     if file.filename.endswith('.txt'):
         file_content = file.read().decode('utf-8')  # Read the file content
@@ -40,17 +41,14 @@ def upload_input_file():
         if len(lines) < 1:
             return "File is empty", 400
 
-        # First line processing
-        first_line = lines[0].strip().split()
-        
         # Case: One integer (image file names)
-        if len(first_line) == 1 and first_line[0].isdigit():
+        if len(lines) >= 1:
             input_type = 'imagelist'
             session['current_row'] = None
             session['current_col'] = None
-            npt = int(first_line[0])
-            image_file_names = [line.strip() for line in lines[1:npt + 1]]
-            ts_functions.extract_dates_strlist(image_file_names)
+            npt = int(len(lines))
+            image_file_names = [line.strip() for line in lines if line.strip()]
+            ts_functions.extract_image_list_dates(image_file_names)
         else:
             return "Invalid format in the first line of the file", 400
 
@@ -227,6 +225,7 @@ def calculate_row_col():
     if input_type == 'imagelist':
         # Validate index
         current_geotiff_paths = ts_functions.load4memory_image_file_names()
+
         try:
             geotiff_index = int(geotiff_index)
         except (TypeError, ValueError):
@@ -237,9 +236,11 @@ def calculate_row_col():
 
         geotiff_path = current_geotiff_paths[geotiff_index]
 
+
         try:
             with rasterio.open(geotiff_path) as src:
                 # Transform WGS84 lon/lat -> dataset CRS x/y
+
                 if src.crs is None:
                     return jsonify({'error': 'Dataset has no CRS'}), 400
 
@@ -268,7 +269,6 @@ def calculate_row_col():
                 session['current_col'] = col + 1
 
                 return jsonify({'row': row + 1, 'col': col + 1})
-
         except Exception as e:
             return jsonify({'error': f'Error calculating row/col (imagelist): {str(e)}'}), 500
 
@@ -515,14 +515,11 @@ def upload_qa_file():
 
         if len(lines) < 1:
             return "File is empty", 400
-
-        # First line processing
-        first_line = lines[0].strip().split()
         
         # Case: One integer (image file names)
-        if len(first_line) == 1 and first_line[0].isdigit():
-            npt = int(first_line[0])
-            qa_file_names = [line.strip() for line in lines[1:npt + 1]]
+        if len(lines) >= 1:
+            npt = int(len(lines))
+            qa_file_names = [line.strip() for line in lines if line.strip()]
         else:
             return "Invalid format in the first line of the file", 400
 

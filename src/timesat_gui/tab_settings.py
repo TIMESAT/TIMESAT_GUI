@@ -7,6 +7,10 @@ import pandas as pd
 import json
 import datetime
 
+def load4array_params():
+    global array_params
+    return array_params
+
 tab_settings_bp = Blueprint('tab_settings', __name__)
 
 # Default parameter values
@@ -63,10 +67,6 @@ default_params = {
     "n_memory": 1
 }
 
-def load4array_params():
-    global ARRAY_PARAMS
-    return ARRAY_PARAMS
-
 def _build_array_params_from_defaults(defaults):
     return {
         'p_fitmethod': np.full(255, defaults.get('p_fitmethod', 0), dtype='uint8'),
@@ -85,20 +85,19 @@ def _build_array_params_from_defaults(defaults):
 
 @tab_settings_bp.route('/initialize_session', methods=['POST'])
 def initialize_session():
-    global ARRAY_PARAMS
+    global array_params
     # init scalars per session (fine to keep in session)
     for k, v in default_params.items():
         session[k] = v
     # init arrays in global (single-user local)
-    ARRAY_PARAMS = _build_array_params_from_defaults(default_params)
-    ts_functions.save2array_params(ARRAY_PARAMS)
+    array_params = _build_array_params_from_defaults(default_params)
     return '', 204
 
 
 # 更新变量并生成曲线图
 @tab_settings_bp.route("/update_plot", methods=["POST"])
 def update_plot():
-    global ARRAY_PARAMS
+    global array_params
     # 确保所有参数都从 session 中获取（即使只更新一个参数）
     col_start = session.get('col_start', 1) - 1
     col_end = session.get('col_end', 1) - 1
@@ -162,7 +161,7 @@ def update_plot():
     if not (0 <= idlu < 255):
         raise ValueError(f"idlu {idlu} out of range (0–254)")
 
-    ap = ARRAY_PARAMS
+    ap = array_params
     ap['p_fitmethod'][idlu]      = p_fitmethod[idlu]
     ap['p_smooth'][idlu]         = p_smooth[idlu]
     ap['p_nenvi'][idlu]          = p_nenvi[idlu]
@@ -361,7 +360,8 @@ def update_plot():
             line=dict(color='rgba(0.5, 0.5, 0.5, 1)', width=2)
             ))
 
-    ts_functions.save2array_params(ap)
+    # transfer to global
+    array_params = ap
 
     # 更新图表布局
     fig.update_layout(
